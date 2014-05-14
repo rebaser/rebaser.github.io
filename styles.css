@@ -38,9 +38,15 @@ ul {
 }
 
 #info .p1 {
-    font-size: 110%;
+    font-size: 130%;
     font-weight: bold;
     color: #999999;
+}
+
+#info .p1 {
+    font-size: 110%;
+    font-weight: bold;
+    color: #eeeeee;
 }
 
 #logocontainer {
