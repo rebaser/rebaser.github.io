@@ -376,28 +376,30 @@
                 </div>
             </div>
             <!-- /.col-md-6 -->
-            <div class="col-md-6 col-sm-6">
-                <div class="row contact-form">
-                    <fieldset class="col-md-6 col-sm-6">
-                        <input id="name" type="text" name="name" placeholder="Name">
-                    </fieldset>
-                    <fieldset class="col-md-6 col-sm-6">
-                        <input type="email" name="email" id="email" placeholder="Email">
-                    </fieldset>
-                    <fieldset class="col-md-12">
-                        <input type="text" name="subject" id="subject" placeholder="Subject">
-                    </fieldset>
-                    <fieldset class="col-md-12">
-                        <textarea name="comments" id="comments" placeholder="Message"></textarea>
-                    </fieldset>
-                    <fieldset class="col-md-12">
-                        <input type="submit" name="send" value="Send Message" id="submit" class="button">
-                    </fieldset>
-                </div>
+            <form class="form-horizontal" id="contact_form">
+                <div class="col-md-6 col-sm-6">
+                    <div class="row contact-form">
+                        <fieldset class="col-md-6 col-sm-6">
+                            <input id="name" type="text" name="name" placeholder="Name">
+                        </fieldset>
+                        <fieldset class="col-md-6 col-sm-6">
+                            <input type="email" name="email" id="email" placeholder="Email">
+                        </fieldset>
+                        <fieldset class="col-md-12">
+                            <input type="text" name="subject" id="subject" placeholder="Subject">
+                        </fieldset>
+                        <fieldset class="col-md-12">
+                            <textarea name="msg" id="msg" placeholder="Message"></textarea>
+                        </fieldset>
+                        <fieldset class="col-md-12">
+                            <input type="submit" name="submit" value="Send Message" id="submit" class="button">
+                        </fieldset>
+                    </div>
                 <!-- /.contact-form -->
-            </div>
-            <!-- /.col-md-6 -->
-        </div>
+                </div>
+                <!-- /.col-md-6 -->
+            </form>
+       </div>
         <!-- /.row -->
     </div>
     <!-- /.container -->
@@ -417,6 +419,11 @@
                     <li><a href="https://twitter.com/RebaserAB" class="fa fa-twitter"></a></li>
                     <li><a href="https://www.linkedin.com/company/rebaser-ab" class="fa fa-linkedin"></a></li>
                     <!--<li><a href="#" class="fa fa-rss"></a></li>-->
+                    <!-- li><a href="#" class="fa fa-facebook"></a></li -->
+                    <li><a href="https://twitter.com/rebaserab" class="fa fa-twitter"></a></li>
+                    <!-- li><a href="#" class="fa fa-instagram"></a></li>
+                    <li><a href="#" class="fa fa-linkedin"></a></li>
+                    <li><a href="#" class="fa fa-rss"></a></li-->
                 </ul>
             </div>
             <!-- /.col-md-6 -->
@@ -434,5 +441,52 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/main.js"></script>
+    <script>
+jQuery(function($)  
+{
+    $("#contact_form").submit(function()
+    {
+        var email = $("#email").val(); // get email field value
+        var name = $("#name").val(); // get name field value
+        var msg = $("#msg").val(); // get message field value
+        var subject = $("#subject").val(); // get subject field value
+        $.ajax(
+        {
+            type: "POST",
+            url: "https://mandrillapp.com/api/1.0/messages/send.json",
+            data: {
+                'key': 'nUQ5fug3dC5LikqRPh_q5g',
+                'message': {
+                    'from_email': email,
+                    'from_name': name,
+                    'headers': {
+                        'Reply-To': email
+                    },
+                    'subject': subject,
+                    'text': msg,
+                    'to': [
+                    {
+                        'email': 'admin@rebaser.com',
+                        'name': 'Lead Processor',
+                        'type': 'to'
+                    }]
+                }
+            }
+        })
+        .done(function(response) {
+            alert('Your message has been sent. Thank you!'); // show success message
+            $("#name").val(''); // reset field after successful submission
+            $("#email").val(''); // reset field after successful submission
+            $("#msg").val(''); // reset field after successful submission
+            $("#subject").val(''); // reset field after successful submission
+        })
+        .fail(function(response) {
+            alert('Error sending message.');
+        });
+        return false; // prevent page refresh
+    });
+});
+    </script>
+
 </body>
 </html>
