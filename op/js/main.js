@@ -49,7 +49,7 @@ var map = '';
 function initialize() {
     var mapOptions = {
       zoom: 14,
-      center: new google.maps.LatLng(59.4641786,18.066317)
+      center: new google.maps.LatLng(59.4324956,18.0498393)
     };
     map = new google.maps.Map(document.getElementById('map'),  mapOptions);
 }
