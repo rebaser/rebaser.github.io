@@ -426,6 +426,7 @@ h6 {
 }
 .bx-controls {
   position: relative;
+  margin-right: -20px;
 }
 .bx-controls-direction {
   position: absolute;
